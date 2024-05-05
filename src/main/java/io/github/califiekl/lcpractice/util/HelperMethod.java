@@ -4,10 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HelperMethod {
-    public static int[] getIntArray(Integer... args){
+
+    public static int[] getIntArray(int...args){
         List<Integer> input = new ArrayList<>();
-        for(Integer arg: args)
+        for(int arg: args)
             input.add(arg);
         return input.stream().mapToInt(i->i).toArray();
     }
+    public static <T> T[] getArray(T...args){
+        List<T> input = new ArrayList<>();
+        for(T arg: args)
+            input.add(arg);
+        return (T[]) input.stream().map(i->i).toArray();
+    }
+
 }
