@@ -1,27 +1,40 @@
 package io.github.califiekl.lcpractice.jumpgame;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SolutionOriginal implements Solution{
+
     private int[] maxReachables;
-    private Map<Integer, Integer> results = new HashMap<>();
+    private int[] results;
+
+    public SolutionOriginal(){}
+    public SolutionOriginal(int nums[]){
+        if(null==nums) throw new JumpGameException("cannot create instance: input array is null");
+        initializeMaxReachables(nums);
+        initializeResultArray(nums);
+    }
+
+    private void initializeMaxReachables(int[] nums){
+        if(null==nums) throw new JumpGameException("cannot initialize maxReachables: input array is null");
+        maxReachables= new int[nums.length];
+        for(int i=0;i<nums.length;++i)
+            maxReachables[i]=i+nums[i];
+    }
+
+    private void initializeResultArray(int[] nums){
+        if(null==nums) throw new JumpGameException("cannot initialize result array: input array is null");
+        results = new int[nums.length];
+        Arrays.fill(results, 0, nums.length, -1);
+    }
 
     @Override
     public int jump(int[] nums) {
-        if(null==nums) throw new JumpGameException("input array is null");
+        if(null==nums) throw new JumpGameException("cannot jump: input array is null");
         if(null==maxReachables)
-            maxReachables=getMaxReachables(nums);
+            initializeMaxReachables(nums);
+        if(null==results)
+            initializeResultArray(nums);
         return calculateMinStep(nums, maxReachables, nums.length-1);
-    }
-
-    private int[] getMaxReachables(int[] nums){
-        int maxReachables[] = new int[nums.length];
-        for(int i=0;i<nums.length;++i)
-            maxReachables[i]=i+nums[i];
-        return maxReachables;
     }
 
     private List<Integer> findAllPossibleLastSteps(int[] maxReachables, int target){
@@ -35,7 +48,7 @@ public class SolutionOriginal implements Solution{
 
     private int calculateMinStep(int[] nums, int[] maxReachables, int target){
         if(target<=1) return target;
-        if(results.get(target)!=null) return results.get(target);
+        if(results[target]!=-1) return results[target];
 
         List<Integer> possibleLastSteps = findAllPossibleLastSteps(maxReachables, target);
 
@@ -43,9 +56,9 @@ public class SolutionOriginal implements Solution{
         for(Integer i: possibleLastSteps){
             minAtI=calculateMinStep(nums, maxReachables, i);
             if(globalMin>minAtI) globalMin=minAtI;
-            results.put(i, minAtI);
+            results[i] = minAtI;
         }
-        results.put(target, globalMin+1);
+        results[target] = globalMin+1;
         return globalMin+1;
     }
 }
