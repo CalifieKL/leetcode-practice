@@ -33,6 +33,16 @@ public abstract class TestSolution {
         assertEquals(2, solution.jump(input));
     }
     @Test
+    public void testJumpWithMaxStepInMiddle(){
+        int[] input=getInput(1,2,100,1,1,1,1,1);
+        assertEquals(3, solution.jump(input));
+    }
+    @Test
+    public void testJumpWithMaxStepInMiddle1(){
+        int[] input=getInput(2,1,100,1,1,1,1,1);
+        assertEquals(2, solution.jump(input));
+    }
+    @Test
     public void exceptionCase1(){
         int[] input=getInput(1,2,3);
         assertEquals(2, solution.jump(input));
