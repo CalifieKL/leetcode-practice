@@ -9,20 +9,20 @@ public class SolutionOriginal implements Solution{
 
     public SolutionOriginal(){}
     public SolutionOriginal(int nums[]){
-        if(null==nums) throw new JumpGameException("cannot create instance: input array is null");
+        nullCheck(nums);
         initializeMaxReachables(nums);
         initializeResultArray(nums);
     }
 
     private void initializeMaxReachables(int[] nums){
-        if(null==nums) throw new JumpGameException("cannot initialize maxReachables: input array is null");
+       nullCheck(nums);
         maxReachables= new int[nums.length];
         for(int i=0;i<nums.length;++i)
             maxReachables[i]=i+nums[i];
     }
 
     private void initializeResultArray(int[] nums){
-        if(null==nums) throw new JumpGameException("cannot initialize result array: input array is null");
+        nullCheck(nums);
         results = new int[nums.length];
         Arrays.fill(results, 0, nums.length, -1);
     }
