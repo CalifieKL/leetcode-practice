@@ -2,6 +2,7 @@ package io.github.califiekl.lcpractice.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class HelperMethod {
 
@@ -16,6 +17,10 @@ public class HelperMethod {
         for(T arg: args)
             input.add(arg);
         return (T[]) input.stream().map(i->i).toArray();
+    }
+    public static <T extends RuntimeException> void nullCheck(Object input, Function<String, T> exceptionCreator, String errorMessage) {
+        if(input==null)
+            throw exceptionCreator.apply(errorMessage);
     }
 
 }

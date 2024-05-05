@@ -1,17 +1,19 @@
 package io.github.califiekl.lcpractice.jumpgame;
 
+import io.github.califiekl.lcpractice.util.HelperMethod;
+
 public class SolutionOptimal1 implements Solution {
 
     private int[] maxReachables;
 
     public SolutionOptimal1(){}
     public SolutionOptimal1(int[] nums){
-        nullCheck(nums);
+        HelperMethod.nullCheck(nums, JumpGameException::new, "cannot instantiate with null input");
         initializeMaxReachables(nums);
     }
 
     private void initializeMaxReachables(int[] nums){
-        nullCheck(nums);
+        HelperMethod.nullCheck(nums, JumpGameException::new, "cannot initialize maxReachables with null input");
         maxReachables = new int[nums.length];
         maxReachables[0]=nums[0];
         for(int i=1;i<nums.length;++i)
@@ -20,7 +22,7 @@ public class SolutionOptimal1 implements Solution {
 
     @Override
     public int jump(int[] nums) {
-        nullCheck(nums);
+        HelperMethod.nullCheck(nums, JumpGameException::new, "cannot jump: input array is null");
         initializeMaxReachables(nums);
 
         int jump = 0;
