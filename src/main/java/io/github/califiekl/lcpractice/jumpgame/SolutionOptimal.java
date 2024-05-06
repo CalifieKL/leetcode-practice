@@ -2,12 +2,12 @@ package io.github.califiekl.lcpractice.jumpgame;
 
 import io.github.califiekl.lcpractice.util.HelperMethod;
 
-public class SolutionOptimal1 implements Solution {
+public class SolutionOptimal implements Solution {
 
     private int[] maxReachables;
 
-    public SolutionOptimal1(){}
-    public SolutionOptimal1(int[] nums){
+    public SolutionOptimal(){}
+    public SolutionOptimal(int[] nums){
         HelperMethod.nullCheck(nums, JumpGameException::new, "cannot instantiate with null input");
         initializeMaxReachables(nums);
     }

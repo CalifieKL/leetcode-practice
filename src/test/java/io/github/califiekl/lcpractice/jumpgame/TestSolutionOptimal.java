@@ -1,8 +1,8 @@
 package io.github.califiekl.lcpractice.jumpgame;
 
-public class TestSolutionOptimal1 extends TestSolution{
+public class TestSolutionOptimal extends TestSolution{
     @Override
     protected Solution getSolution() {
-        return new SolutionOptimal1();
+        return new SolutionOptimal();
     }
 }
