@@ -1,6 +1,7 @@
 package io.github.califiekl.lcpractice.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -12,11 +13,10 @@ public class HelperMethod {
             input.add(arg);
         return input.stream().mapToInt(i->i).toArray();
     }
-    public static <T> T[] getArray(T...args){
-        List<T> input = new ArrayList<>();
-        for(T arg: args)
-            input.add(arg);
-        return (T[]) input.stream().map(i->i).toArray();
+    public static int[] getIntArrayOfSize(int size, int defaultValue){
+        int array[] = new int[size];
+        Arrays.fill(array,0, size, defaultValue);
+        return array;
     }
     public static <T extends RuntimeException> void nullCheck(Object input, Function<String, T> exceptionCreator, String errorMessage) {
         if(input==null)
