@@ -10,18 +10,15 @@ public class SolutionOriginal implements Solution{
         int trendLength;
         for (int i=1;i<ratings.length;++i){
             currTrend = Trend.getCurrentTrend(ratings[i],ratings[i-1]);
-            if(currTrend.isDifferentFrom(prevTrend)||i==ratings.length-1){
+            if(currTrend.isDifferentFrom(prevTrend)){
                 trendLength=i-trendStart;
                 if(Trend.Flat.equals(prevTrend)){
-                    totalCandies+=(trendLength-2);
+                    totalCandies+=(trendLength-1);
                     trendStart=i-1;
-                    if(i==ratings.length-1)
-                        totalCandies+=3;
                 } else {
                     totalCandies+=((trendLength+1)*trendLength/2);
                     trendStart=i;
                 }
-
             }
             prevTrend=currTrend;
         }
@@ -30,7 +27,7 @@ public class SolutionOriginal implements Solution{
             else return totalCandies+1;
         }
 
-        return totalCandies;
+        return totalCandies+((ratings.length-trendStart)*(ratings.length-trendStart+1)/2);
     }
     public enum Trend{
         Upward, Downward, Flat;
