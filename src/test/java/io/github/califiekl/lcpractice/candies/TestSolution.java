@@ -38,4 +38,10 @@ public abstract class TestSolution{
         int[] ratings = HelperMethod.getIntArray(1,2,87,87,87,2,1);
         assertEquals(13, solution.candy(ratings));
     }
+
+    @Test
+    public void exceptionCase3(){
+        int[] ratings = HelperMethod.getIntArray(1,2,87,87,2,1);
+        assertEquals(12, solution.candy(ratings));
+    }
 }
