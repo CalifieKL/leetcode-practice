@@ -37,7 +37,7 @@ public abstract class TestSolution {
         int[] rectangle = HelperMethod.getIntArray(3,3,3,3,3,3,3);
         assertEquals(0, solution.trap(leftSteps));
         assertEquals(0, solution.trap(rightSteps));
-        assertEquals(0, rectangle);
+        assertEquals(0, solution.trap(rectangle));
     }
 
     @Test
