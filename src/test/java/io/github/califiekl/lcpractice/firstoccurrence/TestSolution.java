@@ -28,4 +28,14 @@ public abstract class TestSolution {
         assertEquals(4, solution.strStr("mississippi", "issip"));
     }
 
+    @Test
+    public void shouldReturnFirstOccurrence(){
+        assertEquals(0, solution.strStr("sadthingssad", "sad"));
+    }
+
+    @Test
+    public void shouldHandleRepetativePattenInNeedle(){
+        assertEquals(2, solution.strStr("hello", "ll"));
+    }
+
 }
