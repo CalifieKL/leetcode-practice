@@ -15,6 +15,15 @@ public abstract class TestSolution {
     }
 
     @Test
+    public void shouldthrowExceptionIfAnyOfInputIsNull(){
+        int exceptionHit=0;
+        try{solution.strStr(null, "a");}catch(Exception ex){exceptionHit++;}
+        try{solution.strStr("a", null);}catch(Exception ex){exceptionHit++;}
+        try{solution.strStr(null, null);}catch(Exception ex){exceptionHit++;}
+        assertEquals(3, exceptionHit);
+
+    }
+    @Test
     public void shouldHandlePartialMatch(){
         assertEquals(4, solution.strStr("mississippi", "issip"));
     }

@@ -1,8 +1,13 @@
 package io.github.califiekl.lcpractice.firstoccurrence;
 
+import io.github.califiekl.lcpractice.util.HelperMethod;
+
 public class SolutionOriginal implements Solution{
     @Override
     public int strStr(String haystack, String needle) {
+        HelperMethod.nullCheck(haystack, FirstOccurrenceException::new, "hay stack is null");
+        HelperMethod.nullCheck(needle, FirstOccurrenceException::new, "needle is null");
+        
         int needleLength = needle.length();
         int haystackLength = haystack.length();
         for(int i=0; i<haystackLength;++i){
