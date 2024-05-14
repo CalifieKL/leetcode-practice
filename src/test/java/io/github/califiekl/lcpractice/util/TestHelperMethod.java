@@ -2,6 +2,7 @@ package io.github.califiekl.lcpractice.util;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TestHelperMethod {
@@ -27,5 +28,16 @@ public class TestHelperMethod {
             exceptionThrown = true;
         }
         assertTrue(!exceptionThrown);
+    }
+
+    @Test
+    public void getStringOfSizeShouldReturnEmptyForNonPositiveInput(){
+        assertEquals("", HelperMethod.getStringOfSize(-3));
+        assertEquals("", HelperMethod.getStringOfSize(0));
+    }
+
+    @Test
+    public void getStringOfSizeShouldReturnWhiteSpaceStringOfCorrectSizeFOrPositiveInput(){
+        assertEquals("   ", HelperMethod.getStringOfSize(3));
     }
 }
