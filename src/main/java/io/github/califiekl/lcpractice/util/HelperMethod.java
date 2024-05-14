@@ -1,5 +1,6 @@
 package io.github.califiekl.lcpractice.util;
 
+import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +22,11 @@ public class HelperMethod {
     public static <T extends RuntimeException> void nullCheck(Object input, Function<String, T> exceptionCreator, String errorMessage) {
         if(input==null)
             throw exceptionCreator.apply(errorMessage);
+    }
+
+    public static String getStringOfSize(int n){
+        if(n<=0) return "";
+        return CharBuffer.allocate(n).toString().replace('\0', ' ');
     }
 
 }
