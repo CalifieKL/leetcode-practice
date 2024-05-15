@@ -41,5 +41,14 @@ select machine_id, round(avg(raw_processing_time),3) as processing_time from(
     )
 )group by machine_id;
 
+--Students and Examinations
+--Solution Original
+select a.student_id as student_id, a.student_name as student_name, a.subject_name as subject_name, count(b.subject_name) as attended_exams from(
+    (select student_id, student_name, subject_name from Students, Subjects) a left join Examinations b
+    on a.student_id=b.student_id and a.subject_name=b.subject_name
+)
+group by a.student_id, a.student_name, a.subject_name
+order by a.student_id, a.student_name, a.subject_name;
+
 
 
