@@ -42,7 +42,7 @@ select machine_id, round(avg(raw_processing_time),3) as processing_time from(
 )group by machine_id;
 
 --Students and Examinations
---Solution Original
+--Solution original
 select a.student_id as student_id, a.student_name as student_name, a.subject_name as subject_name, count(b.subject_name) as attended_exams from(
     (select student_id, student_name, subject_name from Students, Subjects) a left join Examinations b
     on a.student_id=b.student_id and a.subject_name=b.subject_name
@@ -63,6 +63,21 @@ select Employee.name from (
     on Employee.id = a.managerId
 )where num > 4;
 
-
-
-
+--Confirmation Rate
+--Solution original
+select Signups.user_id as user_id, case when Rate.rate is null then 0 else Rate.rate end as confirmation_rate from(
+    Signups left join(
+        select a.user_id, case when confirmations is null then 0 else round(confirmations/allRequests,2) end as rate from
+        (select user_id, count(*) as allRequests from Confirmations group by user_id)a
+        left join
+        (select user_id, count(*) as confirmations from Confirmations where action='confirmed' group by user_id)b
+        on a.user_id = b.user_id
+    ) Rate
+    on Signups.user_id=Rate.user_id);
+--if statement doesn't work for the rate selection:
+--i.e.,if Rate.rate is null then 0 else Rate.rate end if as confirmation_rate
+--will give error
+--Solution optimal
+select Signups.user_id, round(avg(case when Confirmations.action='confirmed' then 1 else 0 end), 2) as confirmation_rate from (Signups left outer join Confirmations on Signups.user_id = Confirmations.user_id)
+group by Signups.user_id
+--Note: avg() - confirmation_rate = #confirmation/#request=(1*#confirmation+0*#timeout)/(#confirmation+#timeout)
