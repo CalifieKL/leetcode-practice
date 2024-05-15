@@ -50,5 +50,19 @@ select a.student_id as student_id, a.student_name as student_name, a.subject_nam
 group by a.student_id, a.student_name, a.subject_name
 order by a.student_id, a.student_name, a.subject_name;
 
+--Managers with at Least 5 Direct Reports
+--first original
+select name from Employee where id in (select managerId from(
+    select managerId, count(*) as num
+    from Employee
+    group by managerId)
+where num > 4);
+--second original
+select Employee.name from (
+    Employee left join (select managerId, count(*) as num from Employee group by managerId) a
+    on Employee.id = a.managerId
+)where num > 4;
+
+
 
 
