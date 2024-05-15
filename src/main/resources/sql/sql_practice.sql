@@ -29,7 +29,17 @@ where prev_temp < temperature;
 --Solution Clean
 select a.id from Weather a ,weather b
 where a.recordDate =(b.recordDate +1)
-and a.temperature>b.temperature  
+and a.temperature>b.temperature
+
+--Average Time of Process Per Machine
+--Solution Original
+select machine_id, round(avg(raw_processing_time),3) as processing_time from(
+    select a.machine_id,  (b.timestamp-a.timestamp) as raw_processing_time from (
+        (select machine_id, process_id, timestamp from activity where activity_type='start') a
+        inner join (select machine_id, process_id, timestamp from activity where activity_type='end') b
+        on a.machine_id=b.machine_id and a.process_id = b.process_id
+    )
+)group by machine_id;
 
 
 
