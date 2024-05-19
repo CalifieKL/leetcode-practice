@@ -99,3 +99,26 @@ coalesce(round(sum(units*price)/sum(units),2),0) as average_price from (
     on p.product_id=u.product_id and (u.purchase_date between p.start_date and p.end_date)
 )
 group by product_id;
+
+--Percentage of Users Attended a Contest
+--Solution Original
+select contest_id, round(participants*100/total,2) as percentage from
+(select contest_id, count(user_id) as participants from Register group by contest_id) r,
+(select count(*)  as total from Users) t
+order by percentage desc, contest_id
+--Solution Cleaner
+select contest_id, round(count(*)*100/(select count(*) from Users),2) as percentage
+from Register
+group by contest_id
+order by percentage desc, contest_id
+--Note: select aggregate can be treated as constant
+
+--Queries Quality and Percentage
+--Solution Clean
+select query_name,
+round(sum(rating/position)/count(*),2) as quality,
+round(100*sum(case when rating<3 then 1 else 0 end)/count(*),2) as poor_query_percentage
+from Queries
+where query_name is not null
+group by query_name
+--Note: avg() can be used for the quality calculation
