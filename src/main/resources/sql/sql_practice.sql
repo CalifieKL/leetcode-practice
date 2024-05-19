@@ -110,7 +110,7 @@ order by percentage desc, contest_id
 select contest_id, round(count(*)*100/(select count(*) from Users),2) as percentage
 from Register
 group by contest_id
-order by percentage desc, contest_id
+order by percentage desc, contest_id;
 --Note: select aggregate can be treated as constant
 
 --Queries Quality and Percentage
@@ -120,5 +120,25 @@ round(sum(rating/position)/count(*),2) as quality,
 round(100*sum(case when rating<3 then 1 else 0 end)/count(*),2) as poor_query_percentage
 from Queries
 where query_name is not null
-group by query_name
+group by query_name;
 --Note: avg() can be used for the quality calculation
+
+--Monthly Transactions I
+--Solution Original
+select month, country,
+count(*) as trans_count,
+sum(case when state='approved' then 1 else 0 end) as approved_count,
+sum(amount) as trans_total_amount,
+sum(case when state='approved' then amount else 0 end) as approved_total_amount
+from (select to_char(trans_date,'yyyy-mm') as month, country, state, amount from Transactions)
+group by month, country;
+--Solution Clean
+select to_char(trans_date,'yyyy-mm') as month,
+country,
+count(*) as trans_count,
+sum(case when state='approved' then 1 else 0 end) as approved_count,
+sum(amount) as trans_total_amount,
+sum(case when state='approved' then amount else 0 end) as approved_total_amount
+from Transactions
+group by to_char(trans_date,'yyyy-mm'), country;
+--Note: can group by function call result; plsql uses single quotation mark for strings
