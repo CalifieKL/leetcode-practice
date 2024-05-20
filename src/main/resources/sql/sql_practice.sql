@@ -195,3 +195,8 @@ select to_char(activity_date,'yyyy-mm-dd') as day, count(distinct user_id) as ac
 where activity_date+30> to_date('2019-07-27', 'yyyy-mm-dd') and activity_date <= to_date('2019-07-27', 'yyyy-mm-dd')
 group by activity_date;
 --Note: the use of to_char() and to_date()
+
+--Classes More Than 5 Students
+--Solution Original
+select class from Courses group by class having count(*) >= 5;
+--Note: having clause
