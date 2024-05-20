@@ -28,7 +28,7 @@ public abstract class TestSolution {
     public void shouldReturnMinSubArrSizeIfTargetIsObtainable(){
         assertEquals(2, solution.minSubArrayLen(7, HelperMethod.getIntArray(2,3,1,2,4,3)));
         assertEquals(1, solution.minSubArrayLen(4, HelperMethod.getIntArray(1,3,5)));
-        assertEquals(5,solution.minSubArrayLen(7, HelperMethod.getIntArray(1,1,1,1,1)));
+        assertEquals(5,solution.minSubArrayLen(5, HelperMethod.getIntArray(1,1,1,1,1)));
     }
 
     @Test
