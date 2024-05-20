@@ -166,3 +166,25 @@ where (customer_id, order_date) in
 (select customer_id,
 min(order_date) keep (dense_rank first order by order_date) over (partition by customer_id) as first_order
 from Delivery);
+
+--Game Play Analysis IV
+--Solution Original
+select round(case
+    when count(distinct Activity.player_id)=0 then 0
+    else count(distinct a.player_id)/count(distinct Activity.player_id) end,
+    2) as fraction from
+Activity cross join(
+    select player_id from Activity where (player_id,event_date) in (
+        select player_id, (min(event_date)
+            keep (dense_rank first order by event_date)
+            over (partition by player_id))+1
+        from Activity)
+)a;
+--Note: this has a weird edge case when a.player_id is empty (error would be 0 divisor)
+--Solution Clean
+select round(
+    sum(case
+        when (select min(a1.event_date) from Activity a1 where a1.player_id = a.player_id)+1=a.event_date then 1
+        else 0 end)/count(distinct a.player_id),2) as fraction
+from Activity a;
+--Note: select & reference to another table can be used in case clause
