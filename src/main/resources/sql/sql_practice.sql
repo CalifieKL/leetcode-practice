@@ -142,3 +142,27 @@ sum(case when state='approved' then amount else 0 end) as approved_total_amount
 from Transactions
 group by to_char(trans_date,'yyyy-mm'), country;
 --Note: can group by function call result; plsql uses single quotation mark for strings
+
+--Immediate Food Delivery II
+--Solution Original
+select
+    round(100*sum(case when order_date=customer_pref_delivery_date then 1 else 0 end)/count(*),2) as  immediate_percentage
+from
+    (select customer_id, min(order_date) keep(dense_rank first order by order_date) as first_order
+    from Delivery group by customer_id) fo
+    left outer join
+    (select customer_id, order_date, customer_pref_delivery_date from Delivery) d
+    on fo.customer_id =d.customer_id and fo.first_order = d.order_date;
+--Solution Clean
+select round(100*avg(case when order_date=customer_pref_delivery_date then 1 else 0 end),2) as  immediate_percentage
+from delivery
+where (customer_id, order_date) in
+(select customer_id, min(order_date) as first_order from Delivery group by customer_id);
+--Note: dense_rank first/last order by clause is for sorting of aggregate on a different column
+--Solution alternative without group by
+select round(100*avg(case when order_date=customer_pref_delivery_date then 1 else 0 end),2) as  immediate_percentage
+from delivery
+where (customer_id, order_date) in
+(select customer_id,
+min(order_date) keep (dense_rank first order by order_date) over (partition by customer_id) as first_order
+from Delivery);
