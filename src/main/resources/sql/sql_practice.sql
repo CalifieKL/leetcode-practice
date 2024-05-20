@@ -188,3 +188,10 @@ select round(
         else 0 end)/count(distinct a.player_id),2) as fraction
 from Activity a;
 --Note: select & reference to another table can be used in case clause
+
+--User Activity for the Past 30 Days I
+--Solution Original
+select to_char(activity_date,'yyyy-mm-dd') as day, count(distinct user_id) as active_users from Activity
+where activity_date+30> to_date('2019-07-27', 'yyyy-mm-dd') and activity_date <= to_date('2019-07-27', 'yyyy-mm-dd')
+group by activity_date;
+--Note: the use of to_char() and to_date()
