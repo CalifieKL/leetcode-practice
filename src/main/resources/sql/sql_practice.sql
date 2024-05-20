@@ -200,3 +200,16 @@ group by activity_date;
 --Solution Original
 select class from Courses group by class having count(*) >= 5;
 --Note: having clause
+
+--Customers who Bought All Products
+--Solution without having
+select p.customer_id from
+(select customer_id, count(distinct product_key) as count from Customer
+group by customer_id) p
+where count=(select count(*) from Product);
+--Solution with having
+select customer_id from Customer
+group by customer_id
+having count(distinct product_key)=(select count(*) from Product)
+--Note: having clause gets rid of nested query
+
