@@ -213,3 +213,22 @@ group by customer_id
 having count(distinct product_key)=(select count(*) from Product)
 --Note: having clause gets rid of nested query
 
+--The Number of Employees Reporting to Each Manager
+--Solution Original
+select m.manager_id as employee_id, e.name, m.reports_count, m.average_age
+from Employees e
+right outer join
+    (select reports_to as manager_id, count(*) as reports_count, round(avg(age)) as average_age
+    from Employees
+    where reports_to is not null
+    group by reports_to) m
+on e.employee_id=m.manager_id;
+order by m.manager_id;
+--Solution without Nested Query
+select e1.employee_id ,
+e1.name, count(*) as reports_count,
+round(avg(e2.age)) as average_age from Employees e1 inner join Employees e2
+on e1.employee_id=e2.reports_to
+group by e1.employee_id, e1.name
+order by e1.employee_id
+
