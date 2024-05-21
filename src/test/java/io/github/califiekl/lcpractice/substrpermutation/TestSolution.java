@@ -20,7 +20,25 @@ public abstract class TestSolution {
     @Test
     public void testCase1(){
         assertTwoSortedListsAreEqual(Arrays.asList(new Integer[]{0,9}),
+                solution.findSubstring("barfoothefoobarman", new String[]{"foo","bar"}));
+    }
+
+    @Test
+    public void testCase2(){
+        assertTwoSortedListsAreEqual(Arrays.asList(new Integer[]{6,9,12}),
                 solution.findSubstring("barfoofoobarthefoobarman", new String[]{"bar","foo","the"}));
+    }
+
+    @Test
+    public void testCase3(){
+        assertTwoSortedListsAreEqual(Arrays.asList(new Integer[]{}),
+                solution.findSubstring("wordgoodgoodgoodbestword", new String[]{"word","good","best","word"}));
+    }
+
+    @Test
+    public void exceptionCase1(){
+        assertTwoSortedListsAreEqual(Arrays.asList(new Integer[]{0}),
+                solution.findSubstring("ababababab", new String[]{"ababa","babab"}));
     }
 
     private void assertTwoSortedListsAreEqual(List<Integer> expected, List<Integer> result) {
