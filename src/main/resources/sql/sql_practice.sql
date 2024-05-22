@@ -257,3 +257,13 @@ group by product_id
 having min(change_date)>to_date('2019-08-16','yyyy-mm-dd');
 --Note: aggregate function value as selecting condition argument needs to be paired with group by
 --i.e. group by [column] having [some condition with aggregate function]
+
+--Last Person to Fit in the Bus
+--Solution half original
+select
+    distinct first_value(w.person_name) over (order by w.total_weight desc) as person_name
+from
+    (select turn, person_name, sum(weight) over (order by turn) as total_weight from Queue
+    order by turn desc)w
+where w.total_weight<=1000;
+--Note: first_value returns duplicates (same number of copy as count(*) without distinct)
