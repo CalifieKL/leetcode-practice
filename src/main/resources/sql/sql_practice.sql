@@ -267,3 +267,12 @@ from
     order by turn desc)w
 where w.total_weight<=1000;
 --Note: first_value returns duplicates (same number of copy as count(*) without distinct)
+--Note: sum () over (order by) can be used without group by
+--Solution Cleaner
+select
+    w.person_name as person_name
+from
+    (select turn, person_name, sum(weight) over (order by turn) as total_weight from Queue
+    order by turn desc)w
+where w.total_weight<=1000 and rownum=1;
+--Note: rownum is the row number of the returned query result
