@@ -232,3 +232,15 @@ on e1.employee_id=e2.reports_to
 group by e1.employee_id, e1.name
 order by e1.employee_id
 
+--Product Price at A Given Date
+--Solution Original
+select
+    distinct p.product_id, case when valid.price is null then 10 else valid.price end as price
+from
+    Products p
+left outer join
+    (select product_id,max(new_price) keep (dense_rank last order by change_date) as price from Products
+    where change_date<=to_date('2019-08-16','yyyy-mm-dd')
+    group by product_id) valid
+on p.product_id=valid.product_id;
+--Note: dense_rank first/last order by clause needs a group by clause
