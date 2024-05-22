@@ -244,3 +244,16 @@ left outer join
     group by product_id) valid
 on p.product_id=valid.product_id;
 --Note: dense_rank first/last order by clause needs a group by clause
+--Union approach
+select
+    product_id, first_value(new_price) over (partition by product_id order by change_date desc) as price
+from Products
+where change_date<=to_date('2019-08-16','yyyy-mm-dd')
+union
+select
+    product_id, 10 as price
+from Products
+group by product_id
+having min(change_date)>to_date('2019-08-16','yyyy-mm-dd');
+--Note: aggregate function value as selecting condition argument needs to be paired with group by
+--i.e. group by [column] having [some condition with aggregate function]
