@@ -276,3 +276,24 @@ from
     order by turn desc)w
 where w.total_weight<=1000 and rownum=1;
 --Note: rownum is the row number of the returned query result
+
+--Movie Rating
+--Solution Original
+select uresult.u_result as results from(
+    select
+        distinct count(mr.rating) over (partition by mr.user_id) as rated, u.name as u_result
+    from MovieRating mr left outer join Users u on mr.user_id=u.user_id
+    order by rated desc, u.name
+) uresult
+where rownum=1
+union all
+select mresult.m_result as results from (
+    select
+        distinct avg(mr.rating) over (partition by mr.movie_id) as avg_rating, m.title as m_result
+    from MovieRating mr left outer join Movies m on mr.movie_id=m.movie_id
+    where mr.created_at<=to_date('2020-02-29','yyyy-mm-dd') and mr.created_at>= to_date('2020-02-01','yyyy-mm-dd')
+    order by avg_rating desc, m.title
+) mresult
+where rownum=1;
+--Note: union doesn't allow duplicates in result; union all allows duplicates
+--Note: pay attention to the correct location to put the where rownum=1 clause (has to be after the ordering)
