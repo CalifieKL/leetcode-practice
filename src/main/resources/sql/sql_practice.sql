@@ -297,3 +297,18 @@ select mresult.m_result as results from (
 where rownum=1;
 --Note: union doesn't allow duplicates in result; union all allows duplicates
 --Note: pay attention to the correct location to put the where rownum=1 clause (has to be after the ordering)
+
+--Restaurant Growth
+--Solution
+with week_table as (
+    select distinct a.visited_on as start_date, b.visited_on as end_date
+    from Customer a inner join Customer b
+    on a.visited_on=b.visited_on-6;
+)
+
+select to_char(w.start_date+6, 'yyyy-mm-dd') as visited_on,
+    sum(c.amount) as amount, round(sum(c.amount)/7, 2) as average_amount
+from week_table w, Customer c
+where c.visited_on between w.start_date and w.end_date
+group by w.start_date
+order by w.start_date;
