@@ -312,3 +312,16 @@ from week_table w, Customer c
 where c.visited_on between w.start_date and w.end_date
 group by w.start_date
 order by w.start_date;
+
+--Friend Requests II
+--Solution convoluted
+select id, num from(
+    select case when r.id is null then a.id else r.id end as ID,
+    ((case when requests is null then 0 else requests end)+(case when accepted is null then 0 else accepted end)) as num
+    from
+        (select requester_id as id, count(requester_id) as requests from RequestAccepted group by requester_id) r
+        full outer join
+        (select accepter_id as id, count(accepter_id) as accepted from RequestAccepted group by accepter_id) a
+        on r.id=a.id
+    order by num desc
+) where rownum=1;
