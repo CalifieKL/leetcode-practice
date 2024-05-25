@@ -383,3 +383,7 @@ select department, employee, salary from(
     from Employee e left join Department d on e.departmentId =d.id)
 where rk in (1,2,3);
 --Note: dense_rank() will produce consecutive ranking with tie; rank() will skip numbers after tie
+
+--Fix Names in a Table
+select user_id, upper(substr(name,1,1))||lower(substr(name,2)) as name from Users order by user_id;
+--Note: initcap() will capitilize first letter of every word (delimitered by white space or non-alphanumeric chars)
