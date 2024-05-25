@@ -352,3 +352,26 @@ where
     (lat,lon) not in (select lat, lon from lt where loc_count>1);
 --Note: with [table name 1] as [select clause 1], [table name 2] as [select clause 2]
 --separate views by comma, end with clause with white space
+
+--Department Top 3 Salaries
+--Solution Original
+with
+    s_rk as (
+    select
+        departmentId, salary, rank() over (partition by departmentId order by salary desc) as rk
+    from (select distinct departmentId,salary from Employee)
+    ),
+    e_d as(
+    select
+        e.departmentId, d.name as Department, e.name, e.salary
+    from Employee e
+        left join Department d
+        on e.departmentId=d.id
+    )
+
+select
+    e_d.department as Department, e_d.name as Employee, e_d.salary as Salary
+from e_d
+    left join s_rk
+    on e_d.departmentId=s_rk.departmentId and e_d.salary=s_rk.salary
+where s_rk.rk<=3;
