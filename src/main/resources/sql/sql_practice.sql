@@ -337,3 +337,18 @@ select id, num from (
     )
 where rownum=1;
 --Note: union all to preserve duplicates
+
+--Investments in 2016
+--Solution original
+with
+    lt as (select lat, lon, count(*) as loc_count from Insurance group by (lat, lon)),
+    it as (select tiv_2015, count(*) as iv15_count from Insurance group by tiv_2015)
+
+select sum(tiv_2016) as tiv_2016
+from Insurance
+where
+    tiv_2015 in (select tiv_2015 from it where iv15_count>1)
+    and
+    (lat,lon) not in (select lat, lon from lt where loc_count>1);
+--Note: with [table name 1] as [select clause 1], [table name 2] as [select clause 2]
+--separate views by comma, end with clause with white space
