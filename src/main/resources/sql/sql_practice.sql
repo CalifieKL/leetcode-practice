@@ -375,3 +375,11 @@ from e_d
     left join s_rk
     on e_d.departmentId=s_rk.departmentId and e_d.salary=s_rk.salary
 where s_rk.rk<=3;
+--Solution Cleaner
+select department, employee, salary from(
+    select
+        d.name as department, e.name as employee, e.salary as salary,
+        dense_rank() over (partition by e.departmentId order by salary desc) as rk
+    from Employee e left join Department d on e.departmentId =d.id)
+where rk in (1,2,3);
+--Note: dense_rank() will produce consecutive ranking with tie; rank() will skip numbers after tie
