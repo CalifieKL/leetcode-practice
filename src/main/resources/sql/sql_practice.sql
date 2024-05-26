@@ -385,5 +385,13 @@ where rk in (1,2,3);
 --Note: dense_rank() will produce consecutive ranking with tie; rank() will skip numbers after tie
 
 --Fix Names in a Table
+--Solution Original
 select user_id, upper(substr(name,1,1))||lower(substr(name,2)) as name from Users order by user_id;
 --Note: initcap() will capitilize first letter of every word (delimitered by white space or non-alphanumeric chars)
+
+--Delete Duplicate Emails
+--Solution Original
+delete from Person
+where id in (select id from (
+    select id, dense_rank() over (partition by email order by id) as rk from Person
+    ) where rk>1);
