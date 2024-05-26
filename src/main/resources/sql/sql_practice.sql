@@ -395,3 +395,6 @@ delete from Person
 where id in (select id from (
     select id, dense_rank() over (partition by email order by id) as rk from Person
     ) where rk>1);
+--Solution Cleaner
+delete from Person
+where id not in (select min(id) from Person group by email);
