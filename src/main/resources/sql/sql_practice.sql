@@ -425,3 +425,9 @@ select distinct * from(
         where order_date >= to_date('2020-02-01','yyyy-mm-dd') and order_date <= to_date('202002-29','yyyy-mm-dd')
     ) o left join Products p on o.product_id=p.product_id)
 )where unit>=100;
+--Solution Cleaner
+select p.product_name, sum(unit) as unit from Products p left join Orders o
+on o.product_id=p.product_id
+where to_char (order_date,'yyyy-mm')='2020-02'
+group by p.product_name
+having sum(unit)>=100;
