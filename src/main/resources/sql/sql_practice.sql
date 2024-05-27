@@ -431,3 +431,8 @@ on o.product_id=p.product_id
 where to_char (order_date,'yyyy-mm')='2020-02'
 group by p.product_name
 having sum(unit)>=100;
+
+--Find Users with Valid Emails
+--Solution Collected 1
+select user_id, name, mail from Users
+where regexp_like(mail, '^[a-zA-Z][a-zA-Z0-9_.-]*@leetcode[.]com$');
