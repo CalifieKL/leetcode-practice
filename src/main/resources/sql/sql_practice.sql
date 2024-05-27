@@ -398,3 +398,11 @@ where id in (select id from (
 --Solution Cleaner
 delete from Person
 where id not in (select min(id) from Person group by email);
+
+--Second Highest Salary
+--Solution Collected 1
+with highest_salary as (select max(salary) as max_s from Employee)
+select max(salary) as SecondHighestSalary from Employee where salary < (select max_s from highest_salary);
+--Solution Collected 2
+select max(salary) as SecondHighestSalary from Employee where salary < (select max(salary) from Employee);
+--Note: aggregate functions return null when arguments don't exists
