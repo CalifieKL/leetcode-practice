@@ -406,3 +406,13 @@ select max(salary) as SecondHighestSalary from Employee where salary < (select m
 --Solution Collected 2
 select max(salary) as SecondHighestSalary from Employee where salary < (select max(salary) from Employee);
 --Note: aggregate functions return null when arguments don't exists
+
+--Group Sold Products by the Date
+--Solution collected
+select
+    to_char(sell_date,'yyyy-mm-dd') as sell_date,
+    count(*) as num_sold,
+    listagg(product,',') within group (order by product) as products
+from (select distinct * from Activities)
+group by sell_date
+order by sell_date;
