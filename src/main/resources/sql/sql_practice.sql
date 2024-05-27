@@ -416,3 +416,12 @@ select
 from (select distinct * from Activities)
 group by sell_date
 order by sell_date;
+
+--List the Products Ordered in a Period
+--Solution Original
+select distinct * from(
+    select p.product_name, sum(o.raw_unit) over (partition by o.product_id) as unit from ((
+        select product_id, unit as raw_unit, order_date from Orders
+        where order_date >= to_date('2020-02-01','yyyy-mm-dd') and order_date <= to_date('202002-29','yyyy-mm-dd')
+    ) o left join Products p on o.product_id=p.product_id)
+)where unit>=100;
