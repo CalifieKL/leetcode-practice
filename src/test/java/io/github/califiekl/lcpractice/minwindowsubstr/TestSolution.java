@@ -13,6 +13,14 @@ public abstract class TestSolution {
     public void init(){
         solution=getSolution();
     }
+    @Test
+    public void shouldThrowExceptionWhenSourceOrTargetIsNull(){
+        int count = 0;
+        try{solution.minWindow(null, "t");}catch(Exception ex){ count++; }
+        try{solution.minWindow("s", null);}catch(Exception ex){ count++; }
+        try{solution.minWindow(null, null);}catch(Exception ex){ count++; }
+        assertEquals(3, count);
+    }
 
     @Test
     public void shouldReturnEmptyStringWhenTargetLongerThanOriginal(){

@@ -1,8 +1,13 @@
 package io.github.califiekl.lcpractice.minwindowsubstr;
 
+import io.github.califiekl.lcpractice.util.HelperMethod;
+
 public class SolutionOptimal implements Solution{
     @Override
     public String minWindow(String s, String t) {
+        HelperMethod.nullCheck(s,MinWindowSubStrException::new, "source string cannot be null");
+        HelperMethod.nullCheck(t,MinWindowSubStrException::new, "target string cannot be null");
+
         if(t.length()>s.length()) return "";
         int wStart=0, wEnd=0, minLen=Integer.MAX_VALUE, startInd=0;
         int numberOfTargetCharUnmatched=t.length();

@@ -1,11 +1,16 @@
 package io.github.califiekl.lcpractice.minwindowsubstr;
 
+import io.github.califiekl.lcpractice.util.HelperMethod;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class SolutionOriginal implements Solution{
     @Override
     public String minWindow(String s, String t) {
+        HelperMethod.nullCheck(s,MinWindowSubStrException::new, "source string cannot be null");
+        HelperMethod.nullCheck(t,MinWindowSubStrException::new, "target string cannot be null");
+
         int slen = s.length();
         int tlen = t.length();
         if (tlen > slen) return "";
