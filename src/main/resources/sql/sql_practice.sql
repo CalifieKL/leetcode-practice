@@ -436,3 +436,14 @@ having sum(unit)>=100;
 --Solution Collected 1
 select user_id, name, mail from Users
 where regexp_like(mail, '^[a-zA-Z][a-zA-Z0-9_.-]*@leetcode[.]com$');
+
+--Top Travellers
+--Solution Original
+select * from(
+    select
+        u.name as name,  (case when travelled_distance is null then 0 else travelled_distance end) as travelled_distance
+    from  Users u left join(
+        select user_id,sum(distance) as travelled_distance from Rides group by user_id
+    )r
+    on r.user_id = u.id) res
+order by res.travelled_distance desc, res.name;
