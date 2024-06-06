@@ -447,3 +447,9 @@ select * from(
     )r
     on r.user_id = u.id) res
 order by res.travelled_distance desc, res.name;
+--Solution Cleaner
+select u.name as name, nvl(sum(r.distance),0) as travelled_distance
+from users u left join rides r
+on u.id=r.user_id
+group by u.name, u.id
+order by travelled_distance desc nulls last, name;
