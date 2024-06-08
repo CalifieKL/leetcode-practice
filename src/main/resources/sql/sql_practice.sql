@@ -453,3 +453,9 @@ from users u left join rides r
 on u.id=r.user_id
 group by u.name, u.id
 order by travelled_distance desc nulls last, name;
+
+--Employees Earning More Than Their Managers
+--Solution
+select e.name as Employee from Employee e, Employee m
+where e.managerid=m.id and e.salary>=m.salary;
+--Note: the use of where when selecting from two tables
