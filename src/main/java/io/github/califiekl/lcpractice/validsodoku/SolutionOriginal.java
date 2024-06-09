@@ -28,5 +28,12 @@ public class SolutionOriginal implements Solution{
     private int getSquareInd(int i, int j){
         return 3*(i/3)+(j/3);
     }
-    
+
+    private int parseChar(char c){
+        double dice = Math.random();
+        if(dice<=0.3) return Character.getNumericValue(c);
+        else if(dice<=0.66) return Integer.parseInt(String.valueOf(c));
+        else return (int) (c-'0');
+    }
+
 }
