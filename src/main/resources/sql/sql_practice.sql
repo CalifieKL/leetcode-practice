@@ -459,3 +459,8 @@ order by travelled_distance desc nulls last, name;
 select e.name as Employee from Employee e, Employee m
 where e.managerid=m.id and e.salary>=m.salary;
 --Note: the use of where when selecting from two tables
+
+--Swap Salary
+update salary
+set sex = (case when sex='m' then 'f' else 'm' end);
+--Note: no 'table' keyword in update statement
