@@ -464,3 +464,6 @@ where e.managerid=m.id and e.salary>=m.salary;
 update salary
 set sex = (case when sex='m' then 'f' else 'm' end);
 --Note: no 'table' keyword in update statement
+
+--Customers Who Never Order
+select name as Customers from Customers where id not in (select distinct customerId from Orders);
