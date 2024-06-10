@@ -467,3 +467,28 @@ set sex = (case when sex='m' then 'f' else 'm' end);
 
 --Customers Who Never Order
 select name as Customers from Customers where id not in (select distinct customerId from Orders);
+
+--Reformat Department Table
+--Solution Collected
+select * from department pivot (
+    sum(revenue) as Revenue for month in(
+        'Jan' Jan, 'Feb' Feb,   'Mar' Mar,  'Apr' Apr,   'May' May, 'Jun' Jun,
+        'Jul' Jul, 'Aug' Aug,  'Sep' Sep,  'Oct' Oct, 'Nov' Nov, 'Dec' Dec
+    )
+);
+--Note: Pivot Syntax
+/*
+SELECT * FROM
+(
+  SELECT column1, column2
+  FROM tables
+  WHERE conditions
+)
+PIVOT
+(
+  aggregate_function(column2)
+  FOR column2
+  IN ( expr1, expr2, ... expr_n) | subquery
+)
+ORDER BY expression [ ASC | DESC ];
+*/
