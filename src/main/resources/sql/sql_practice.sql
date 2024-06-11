@@ -492,3 +492,12 @@ PIVOT
 )
 ORDER BY expression [ ASC | DESC ];
 */
+
+--Sales Analysis III
+--Solution Collected
+select distinct p.product_id, p.product_name from Product p
+where p.product_id in (
+    select product_id from Sales group by product_id
+    having min(sale_date)>='2019-01-01' and max(sale_date)<='2019-03-31'
+);
+--Note:join not necessary; use aggregate with date limit
