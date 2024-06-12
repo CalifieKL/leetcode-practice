@@ -532,3 +532,10 @@ union
 select product_id, 'store2' as "store", store2 as "price" from Products where store2 is not null
 union
 select product_id, 'store3' as "store", store3 as "price" from Products where store3 is not null
+--Solution Collected 1
+select * from products
+unpivot(
+    price
+    for store
+    in (store1 as 'store1', store2 as 'store2', store3 as 'store3')
+)
