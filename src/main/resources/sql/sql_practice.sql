@@ -501,3 +501,20 @@ where p.product_id in (
     having min(sale_date)>='2019-01-01' and max(sale_date)<='2019-03-31'
 );
 --Note:join not necessary; use aggregate with date limit
+
+--Trips and Users
+--Solution Original
+with valid_trips as (
+    select t.id, t.status, t.request_at from Trips t
+    where t.client_id in (select users_id from Users where banned='No' and role='client')
+    and t.driver_id in (select users_id from Users where banned='No' and role='driver')
+    and (t.request_at>='2013-10-01'and t.request_at<='2013-10-03')
+)
+
+select
+    t.request_at as "Day",
+    round(nvl(sum(case when t.status='completed'then 0 else 1 end)/count(*), 0),2) as "Cancellation Rate"
+from  valid_trips t
+group by t.request_at;
+--Note: for date comparison between...and clause can be used
+--Note: does this query address the case where there is no valid trips on a particular day?
