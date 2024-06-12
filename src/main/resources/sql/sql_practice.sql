@@ -518,3 +518,9 @@ from  valid_trips t
 group by t.request_at;
 --Note: for date comparison between...and clause can be used
 --Note: does this query address the case where there is no valid trips on a particular day?
+
+--Game Analysis I
+--Solution Original
+select player_id, to_char(min(event_date),'yyyy-mm-dd') as first_login
+from Activity
+group by player_id;
