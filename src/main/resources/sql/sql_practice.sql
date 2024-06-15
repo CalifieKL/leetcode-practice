@@ -539,3 +539,12 @@ unpivot(
     for store
     in (store1 as 'store1', store2 as 'store2', store3 as 'store3')
 )
+
+--Daily Leads and Partners
+select
+    to_char(date_id,'yyyy-mm-dd') as date_id,
+    make_name,
+    count(distinct lead_id) as unique_leads,
+    count(distinct partner_id) as unique_partners
+from DailySales
+group by date_id,make_name;
