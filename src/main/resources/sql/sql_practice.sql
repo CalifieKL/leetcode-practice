@@ -548,3 +548,17 @@ select
     count(distinct partner_id) as unique_partners
 from DailySales
 group by date_id,make_name;
+
+--Nth Highest Salary
+--Solution Collected
+create function getNthHighestSalary(n in number) return number is
+result number; -- this semicolon cannot be omitted
+begin
+  select distinct salary into result from (
+    select salary, dense_rank() over (order by salary desc) r from Employee
+  ) where r=n;
+  return result;
+exception
+when no_data_found then
+return null;
+end;
