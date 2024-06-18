@@ -565,3 +565,6 @@ end;
 
 --Rank Scores
 select score, dense_rank() over (order by score desc) as rank from Scores;
+
+--Duplicate Emails
+select email from Person group by email having count(*)>1;
