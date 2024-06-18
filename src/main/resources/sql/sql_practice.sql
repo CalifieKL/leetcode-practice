@@ -568,3 +568,15 @@ select score, dense_rank() over (order by score desc) as rank from Scores;
 
 --Duplicate Emails
 select email from Person group by email having count(*)>1;
+
+--Department Highest Salary
+select
+    d.name as Department, e.name as Employee, e.salary as Salary
+from (
+    select
+        name, salary, departmentId,
+        dense_rank() over (partition by departmentId order by salary desc) as salary_rk
+    from Employee
+) e left join Department d
+on e.departmentId = d.id
+where e.salary_rk=1;
