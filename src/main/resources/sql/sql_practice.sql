@@ -580,3 +580,11 @@ from (
 ) e left join Department d
 on e.departmentId = d.id
 where e.salary_rk=1;
+
+--Bank Account Summary II
+select
+    u.name as name, a.balance as balance
+from (select account, sum(amount) as balance from Transactions group by account) a
+left join Users u
+on u.account = a.account
+where a.balance>10000;
