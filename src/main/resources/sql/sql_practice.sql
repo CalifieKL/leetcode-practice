@@ -603,3 +603,10 @@ where sales_id not in(
     on o.com_id = c.com_id
     where c.name = 'RED'
 );
+--Solution 2
+select name from SalesPerson
+where sales_id not in(
+    select o.sales_id from Company c, Orders o
+    where o.com_id = c.com_id
+    and c.name = 'RED'
+);
