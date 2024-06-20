@@ -594,3 +594,12 @@ select nvl(e.employee_id,s.employee_id) as employee_id from
 Employees e full outer join Salaries s on e.employee_id=s.employee_id
 where e.name is null or s.salary is null
 order by employee_id;
+
+--Sales Person
+--Solution 1
+select name from SalesPerson
+where sales_id not in(
+    select o.sales_id from Company c right join Orders o
+    on o.com_id = c.com_id
+    where c.name = 'RED'
+);
