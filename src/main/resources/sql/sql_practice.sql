@@ -610,3 +610,13 @@ where sales_id not in(
     where o.com_id = c.com_id
     and c.name = 'RED'
 );
+
+--Tree Node
+--Solution 1
+select id, 'Root' as type from Tree where p_id is null
+union
+select id, 'Inner' as type from Tree where p_id is not null and id in (select p_id from Tree)
+union
+select id, 'Leaf' as type from Tree where p_id is not null and id not in (select distinct p_id from Tree where p_id is not null);
+--Note: in the 'Leaf' query, p_id is not null is necessary in both level to
+--a) exclude root nodes and b) include leaf nodes (id not in null excludes all ids; sub query returns empty result)
