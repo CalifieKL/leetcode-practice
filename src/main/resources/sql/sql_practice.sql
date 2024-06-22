@@ -620,3 +620,11 @@ union
 select id, 'Leaf' as type from Tree where p_id is not null and id not in (select distinct p_id from Tree where p_id is not null);
 --Note: in the 'Leaf' query, p_id is not null is necessary in both level to
 --a) exclude root nodes and b) include leaf nodes (id not in null excludes all ids; sub query returns empty result)
+--Solution 2
+select id,
+    (case
+        when p_id is null then 'Root'
+    else
+        case when id in (select p_id from Tree) then 'Inner' else 'Leaf' end
+    end) as type
+from Tree;
