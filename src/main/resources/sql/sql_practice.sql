@@ -628,3 +628,11 @@ select id,
         case when id in (select p_id from Tree) then 'Inner' else 'Leaf' end
     end) as type
 from Tree;
+
+--Find total time spent by each employee
+select
+    to_char(event_day, 'yyyy-mm-dd') as day,
+    emp_id,
+    sum(out_time-in_time) as total_time
+from Employees
+group by event_day, emp_id;
