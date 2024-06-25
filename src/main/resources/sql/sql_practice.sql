@@ -636,3 +636,6 @@ select
     sum(out_time-in_time) as total_time
 from Employees
 group by event_day, emp_id;
+
+--Actors and Directors Who Cooperated At Least Three Times
+select actor_id, director_id from ActorDirector group by actor_id, director_id having count(*)>=3;
