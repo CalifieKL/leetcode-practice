@@ -639,3 +639,10 @@ group by event_day, emp_id;
 
 --Actors and Directors Who Cooperated At Least Three Times
 select actor_id, director_id from ActorDirector group by actor_id, director_id having count(*)>=3;
+
+--Calculate Special Bonus
+select
+    employee_id,
+    case when mod(employee_id,2)=1 and name not like 'M%' then salary else 0 end as bonus
+from Employees
+order by employee_id;
