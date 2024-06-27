@@ -646,3 +646,18 @@ select
     case when mod(employee_id,2)=1 and name not like 'M%' then salary else 0 end as bonus
 from Employees
 order by employee_id;
+
+--Market Analysis I
+with user_orders as
+    (select
+        buyer_id, count(*) as orders_in_2019
+    from Orders
+    where order_date>='2019-01-01' and order_date<='2019-12-31'
+    group by buyer_id)
+
+select
+    u.user_id as buyer_id,
+    to_char(u.join_date,'yyyy-mm-dd') as join_date,
+    nvl(uo.orders_in_2019, 0) as orders_in_2019
+from Users u left join user_orders uo on u.user_id=uo.buyer_id;
+--Note: parenthesis around select clause are necessary in with clause
