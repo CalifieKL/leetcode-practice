@@ -661,3 +661,10 @@ select
     nvl(uo.orders_in_2019, 0) as orders_in_2019
 from Users u left join user_orders uo on u.user_id=uo.buyer_id;
 --Note: parenthesis around select clause are necessary in with clause
+
+--Capital Gain/Loss
+with cashflow as
+    (select
+        stock_name, case when operation ='Buy' then -price else price end as flow
+    from Stocks)
+select stock_name, sum(flow) as capital_gain_loss from cashflow group by stock_name;
