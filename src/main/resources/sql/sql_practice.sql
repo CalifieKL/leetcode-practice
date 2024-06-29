@@ -668,3 +668,10 @@ with cashflow as
         stock_name, case when operation ='Buy' then -price else price end as flow
     from Stocks)
 select stock_name, sum(flow) as capital_gain_loss from cashflow group by stock_name;
+
+--The Latest Login in 2020
+select
+    user_id, max(time_stamp) as last_stamp
+from Logins
+where time_stamp>='2020-01-01 00:00:00' and  time_stamp<'2021-01-01 00:00:00'
+group by user_id;
