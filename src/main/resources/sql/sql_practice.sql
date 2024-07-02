@@ -675,3 +675,14 @@ select
 from Logins
 where time_stamp>='2020-01-01 00:00:00' and  time_stamp<'2021-01-01 00:00:00'
 group by user_id;
+
+--Customer Placing the Largest Number of Orders
+select
+    customer_number
+from
+    (select
+        customer_number, count(*) as num_orders
+    from Orders
+    group by customer_number
+    order by num_orders desc)
+where rownum=1;
