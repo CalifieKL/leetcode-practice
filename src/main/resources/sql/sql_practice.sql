@@ -686,3 +686,25 @@ from
     group by customer_number
     order by num_orders desc)
 where rownum=1;
+
+--Human Traffic of Stadium
+--Solution Collected
+with over100_visit as (
+    select
+        a.*,
+        lag(a.id,1) over (order by a.id) lag_id_1,
+        lag(a.id,2) over (order by a.id) lag_id_2,
+        lead(a.id,1) over (order by a.id) lead_id_1,
+        lead(a.id,2) over (order by a.id) lead_id_2
+    from stadium a
+    where people >= 100)
+
+select
+    id "id",
+    to_char(visit_date, 'yyyy-mm-dd') "visit_date",
+    people "people"
+from over100_visit
+where
+    2 * id - lag_id_1 - lag_id_2 = 3 or
+    lead_id_1 - lag_id_1 = 2 or
+    lead_id_1 + lead_id_2 - 2 * id = 3
